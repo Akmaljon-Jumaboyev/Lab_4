@@ -425,27 +425,219 @@ void main() {
 }
 --------------------------------------------------------------------
 //Task 2
+mixin Flyer {
+  void fly() {
+    print('Taking off!');
+  }
+}
+
+class Bird with Flyer {
+  String species;
+  Bird(this.species);
+}
+
+class Plane with Flyer {
+  String model;
+  Plane(this.model);
+}
+
+void main() {
+  var sparrow = Bird('Sparrow');
+  var boeing = Plane('Boeing 747');
+
+  sparrow.fly(); 
+  boeing.fly();  
+}
+--------------------------------------------------------------------
+//Task 3
+mixin Logger {
+  void log(String message) {
+    print('[LOG] $message');
+  }
+}
+
+class DataService with Logger {
+  void fetchData() {
+    log('Fetching data...');
+    log('Data fetched successfully.');
+  }
+}
+void main() {
+  var service = DataService();
+  service.fetchData();
+}
+--------------------------------------------------------------------
+//Task 4
+mixin Validator {
+  bool isEmailValid(String email) => email.contains('@');
+  bool isPasswordStrong(String password) => password.length >= 8;
+}
+
+class UserSignup with Validator {
+  void validateAndPrint(String email, String password) {
+    print('Email "$email" is ${isEmailValid(email) ? 'valid' : 'invalid'}.');
+    print('Password is ${isPasswordStrong(password) ? 'strong' : 'weak'} (>= 8 chars).');
+  }
+}
+void main() {
+  final signup = UserSignup();
+
+  signup.validateAndPrint('user@example.com', 'password123');
+  signup.validateAndPrint('bad-email', 'short');
+}
+--------------------------------------------------------------------
+//Task 5
+mixin Performer {
+  void perform() => print('Performing...');
+}
+
+mixin Musician {
+  void playInstrument() => print('Playing instrument...');
+}
+
+class Artist {
+  final String name;
+  Artist(this.name);
+}
+
+class Dancer extends Artist with Performer {
+  Dancer(String name) : super(name);
+}
+
+class Guitarist extends Artist with Performer, Musician {
+  Guitarist(String name) : super(name);
+}
+
+void main() {
+  final d = Dancer('Maya');
+  final g = Guitarist('Carlos');
+
+  d.perform();    
+  g.playInstrument(); 
+  g.perform();         
+}
+--------------------------------------------------------------------
+//5 Polymorphism
+//Task 2
+class Weapon {
+  void action() {
+    print('Using a weapon...');
+  }
+}
+class Sword extends Weapon {
+  @override
+  void action() {
+    print('Swinging!');
+  }
+}
+class Bow extends Weapon {
+  @override
+  void action() {
+    print('Firing!');
+  }
+}
+void main() {
+    List<Weapon> arsenal = [Sword(), Bow()];
+  for (var weapon in arsenal) {
+    weapon.action();
+  }
+}
+--------------------------------------------------------------------
+//Task 3
+class Animal {
+  void eat() {
+    print('Animal is eating...');
+  }
+}
+class Lion extends Animal {
+  @override
+  void eat() {
+    print('Lion Eating meat.');
+  }
+}
+class Goat extends Animal {
+  @override
+  void eat() {
+    print('Goat Eating grass.');
+  }
+}
+void feed(Animal animal) {
+  animal.eat();
+}
+void main() {
+  var lion = Lion();
+  var goat = Goat();
+
+  feed(lion); 
+  feed(goat); 
+}
+--------------------------------------------------------------------
+//Task 4
+
+abstract class PaymentMethod {
+  void pay(double amount);
+}
+class CreditCard implements PaymentMethod {
+  @override
+  void pay(double amount) {
+    print('Paid \$${amount.toStringAsFixed(2)} with Credit Card.');
+  }
+}
+class PayPal implements PaymentMethod {
+  @override
+  void pay(double amount) {
+   print('Paid \$${amount.toStringAsFixed(2)} via PayPal.');
+  }
+}
+// Function that accepts any PaymentMethod
+void processPayment(PaymentMethod method, double amount) {
+  method.pay(amount);
+}
+void main() {
+  var card = CreditCard();
+  var paypal = PayPal();
+  processPayment(card, 50.0);
+  processPayment(paypal, 75.5);
+}
+--------------------------------------------------------------------
+//Task 5
+import 'dart:convert';
+
+
+abstract class DataFormatter {
+  String format(Map<String, dynamic> data);
+}
+class JSONFormatter implements DataFormatter {
+  @override
+  String format(Map<String, dynamic> data) {
+    return jsonEncode(data);
+  }
+}
+class KeyValueFormatter implements DataFormatter {
+  @override
+  String format(Map<String, dynamic> data) {
+    return data.entries.map((e) => '${e.key}: ${e.value}').join('\n');
+  }
+}
+void main() {
+  var sampleData = {'name': 'Alice', 'age': 25, 'city': 'Paris'};
+
+  List<DataFormatter> formatters = [JSONFormatter(), KeyValueFormatter()];
+
+  for (var formatter in formatters) {
+    print('--- ${formatter.runtimeType} ---');
+    print(formatter.format(sampleData));
+    print('');
+  }
+}
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+--------------------------------------------------------------------
+// 6 Async Programming
+//Task 2
 
 
 
