@@ -21,9 +21,6 @@ void main() {
   
   myCar.displayInfo(); 
 }
-
-
-
 --------------------------------------------------------------------
 //Task 2
  class Book {
@@ -42,10 +39,7 @@ void main() {
   print('Author: ${myBook.author}');
   print('Pages: ${myBook.numberOfPages}');
 }
-
-
-
---------------------------------------------------------------------
+-------------------------------------------------------------------
 //Task 3
   class Student {
   String name;
@@ -72,7 +66,6 @@ void main() {
   print('Grades: ${student.grades}');
   print('Average Grade: ${student.calculateAverageGrade()}');
 }
-
 --------------------------------------------------------------------
 //Task 4
   class BankAccount {
@@ -104,7 +97,6 @@ void main() {
   account.withdraw(100);  
   account.withdraw(700);
 }
-
 --------------------------------------------------------------------
   //Task 5
 class Rectangle {
@@ -123,7 +115,12 @@ void main() {
   print('Height: ${rect.height}');
   print('Area: ${rect.area}');       
   print('Perimeter: ${rect.perimeter}');
-}
+} 
+
+
+
+
+
 --------------------------------------------------------------------
 // 2 ENUMS
 //Task 1
@@ -188,7 +185,7 @@ void main() {
   print('Red light: ${getAction(TrafficLight.red)}');
   print('Yellow light: ${getAction(TrafficLight.yellow)}');
   print('Green light: ${getAction(TrafficLight.green)}');
-}
+} 
 --------------------------------------------------------------------
 //Task 4 
 enum UserRole { admin, editor, guest }
@@ -230,8 +227,15 @@ void main() {
     print('${light.name}: ${light.durationInSeconds} seconds');
   }
 }
+
+
+
+
+
+
+
 --------------------------------------------------------------------
-//Inheritance
+// 3 Inheritance
 //Task 1
 class Vehicle {
   String make;
@@ -353,9 +357,74 @@ void main() {
 }
 --------------------------------------------------------------------
 //Task 5
+class LibraryItem {
+  final String title;
+  final int id;
+  LibraryItem(this.title, this.id);
+
+  String getDetails() => 'Title: "$title", ID: $id';
+}
+
+class Book extends LibraryItem {
+  final String author;
+  Book(String title, int id, this.author) : super(title, id);
+
+  @override
+  String getDetails() =>
+      'Book — Title: "$title", ID: $id, Author: $author';
+}
+
+class DVD extends LibraryItem {
+  final String director;
+  DVD(String title, int id, this.director) : super(title, id);
+
+  @override
+  String getDetails() =>
+      'DVD  — Title: "$title", ID: $id, Director: $director';
+}
+
+void main() {
+  final book = Book('The Great Gatsby', 101, 'Scott Fitzgerald');
+  final dvd  = DVD('Inception', 202, 'Christopher Nolan');
+
+  print(book.getDetails());
+  print(dvd.getDetails());
+}
 
 
 
+
+
+
+
+--------------------------------------------------------------------
+//4 Mixins
+//Task 1
+mixin Swimmer {
+  void swim() {
+    print('Moving through the water...');
+  }
+}
+
+class Human with Swimmer {
+  String name;
+  Human(this.name);
+}
+
+class Fish with Swimmer {
+  String species;
+  Fish(this.species);
+}
+
+void main() {
+  var person = Human('Alice');
+  var fish = Fish('Tuna');
+
+  person.swim();
+  fish.swim();
+}
+--------------------------------------------------------------------
+//Task 2
 
 
 
