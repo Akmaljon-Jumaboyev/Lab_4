@@ -638,7 +638,28 @@ void main() {
 --------------------------------------------------------------------
 // 6 Async Programming
 //Task 2
+Future<String> generateReport() async {
+  return Future.delayed(Duration(seconds: 1), () => 'Report generated!');
+}
 
+void main() {
+  generateReport().then((result) {
+    print(result); 
+  });
+  print('Generating report...');
+}
+
+--------------------------------------------------------------------
+//Task 3
+Future<String> generateReport() async {
+  return Future.delayed(Duration(seconds: 1), () => 'Report generated!');
+}
+
+void main() async {
+  print('Generating report...');
+  String result = await generateReport();
+  print(result);
+}
 
 
 
