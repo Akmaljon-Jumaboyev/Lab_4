@@ -1,9 +1,499 @@
-void main(){
+//Classes
+//Task 1
+class Car {
+  String make;
+  String model;
+  int year;
 
+  
+  Car(this.make, this.model, this.year);
 
-
-
-
-
-
+ 
+  void displayInfo() {
+    print('Car Information: $year $make $model');
+  }
 }
+
+void main() {
+  
+  var myCar = Car('Toyota', 'Corolla', 2022);
+
+  
+  myCar.displayInfo(); 
+}
+
+
+
+--------------------------------------------------------------------
+//Task 2
+ class Book {
+  String title;
+  String author;
+  int numberOfPages;
+
+  
+  Book(this.title, this.author, this.numberOfPages);
+}
+
+void main() {
+  
+  var myBook = Book('Tohir va Zuhra', 'Sayadi', 208);
+  print('Title: ${myBook.title}');
+  print('Author: ${myBook.author}');
+  print('Pages: ${myBook.numberOfPages}');
+}
+
+
+
+--------------------------------------------------------------------
+//Task 3
+  class Student {
+  String name;
+  int age;
+  List<double> grades;
+
+  
+  Student(this.name, this.age, this.grades);
+
+  
+  double calculateAverageGrade() {
+    if (grades.isEmpty) return 0.0;
+    double sum = grades.reduce((a, b) => a + b);
+    return sum / grades.length;
+  }
+}
+
+void main() {
+  
+  var student = Student('Timur', 20, [60, 92.3, 78.5, 92]);
+
+  
+  print('Student: ${student.name}, Age: ${student.age}');
+  print('Grades: ${student.grades}');
+  print('Average Grade: ${student.calculateAverageGrade()}');
+}
+
+--------------------------------------------------------------------
+//Task 4
+  class BankAccount {
+  String accountNumber;
+  String accountHolderName;
+  double balance;
+
+  BankAccount(this.accountNumber, this.accountHolderName, this.balance);
+
+  void deposit(double amount) {
+    balance += amount;
+    print('Deposited: $amount | Balance: $balance');
+  }
+
+  void withdraw(double amount) {
+    if (amount > balance) {
+      print('Error: Not enough funds.');
+    } else {
+      balance -= amount;
+      print('Withdrew: $amount | Balance: $balance');
+    }
+  }
+}
+
+void main() {
+  var account = BankAccount('12345', 'Alice', 500);
+
+  account.deposit(200);   
+  account.withdraw(100);  
+  account.withdraw(700);
+}
+
+--------------------------------------------------------------------
+  //Task 5
+class Rectangle {
+  double width;
+  double height;
+
+  Rectangle(this.width, this.height);
+
+  double get area => width * height;
+  double get perimeter => 2 * (width + height);
+}
+
+void main() {
+  var rect = Rectangle(5, 3);
+  print('Width: ${rect.width}');
+  print('Height: ${rect.height}');
+  print('Area: ${rect.area}');       
+  print('Perimeter: ${rect.perimeter}');
+}
+--------------------------------------------------------------------
+// 2 ENUMS
+//Task 1
+enum DaysOfWeek {
+  monday,
+  tuesday,
+  wednesday,
+  thursday,
+  friday,
+  saturday,
+  sunday
+}
+
+void checkDay(DaysOfWeek day) {
+  switch (day) {
+    case DaysOfWeek.saturday:
+    case DaysOfWeek.sunday:
+      print('${day.name} is on the weekend');
+      break;
+    default:
+      print('${day.name} is a weekday.');
+  }
+}
+
+void main() {
+  checkDay(DaysOfWeek.monday);
+  checkDay(DaysOfWeek.saturday);
+}
+--------------------------------------------------------------------
+//Task 2
+enum OrderStatus {
+  pending,
+  processing,
+  shipped,
+  delivered,
+  cancelled
+}
+
+void main() {
+  
+  OrderStatus status = OrderStatus.processing;
+
+
+  print('Order status: ${status.name}');
+}
+--------------------------------------------------------------------
+//Task 3
+enum TrafficLight { red, yellow, green }
+
+String getAction(TrafficLight light) {
+  switch (light) {
+    case TrafficLight.red:
+      return "Stop";
+    case TrafficLight.yellow:
+      return "Caution";
+    case TrafficLight.green:
+      return "Go";
+  }
+}
+
+void main() {
+  print('Red light: ${getAction(TrafficLight.red)}');
+  print('Yellow light: ${getAction(TrafficLight.yellow)}');
+  print('Green light: ${getAction(TrafficLight.green)}');
+}
+--------------------------------------------------------------------
+//Task 4 
+enum UserRole { admin, editor, guest }
+
+class User {
+  final String name;
+  final UserRole role;
+
+  User(this.name, this.role);
+
+  
+  bool hasEditPermission() {
+    return role == UserRole.admin || role == UserRole.editor;
+  }
+}
+
+void main() {
+  var alice = User('Alice', UserRole.admin);
+  var bob   = User('Bob', UserRole.editor);
+  var carol = User('Carol', UserRole.guest);
+
+  print('${alice.name} (${alice.role.name}) can edit: ${alice.hasEditPermission()}');
+  print('${bob.name}   (${bob.role.name}) can edit: ${bob.hasEditPermission()}');
+  print('${carol.name} (${carol.role.name}) can edit: ${carol.hasEditPermission()}');
+}
+--------------------------------------------------------------------
+//Task 5
+enum TrafficLight {
+  red(30),
+  yellow(5),
+  green(45);
+
+  final int durationInSeconds;
+  const TrafficLight(this.durationInSeconds);
+}
+
+void main() {
+  for (var light in TrafficLight.values) {
+    print('${light.name}: ${light.durationInSeconds} seconds');
+  }
+}
+--------------------------------------------------------------------
+//Inheritance
+//Task 1
+class Vehicle {
+  String make;
+  String model;
+
+  Vehicle(this.make, this.model);
+
+  void display() {
+    print('Vehicle: $make $model');
+  }
+}
+
+class Car extends Vehicle {
+  int numberOfDoors;
+
+  Car(String make, String model, this.numberOfDoors) : super(make, model);
+
+  @override
+  void display() {
+    super.display(); 
+    print('Doors: $numberOfDoors');
+  }
+}
+
+void main() {
+  var myCar = Car('Chevrolet', 'Cobalt', 4);
+  myCar.display();
+}
+--------------------------------------------------------------------
+//Task 2
+class Animal {
+  void makeSound() {
+    print('Some generic animal sound');
+  }
+}
+
+class Dog extends Animal {
+  @override
+  void makeSound() {
+    print('Woof!');
+  }
+}
+
+
+class Cat extends Animal {
+  @override
+  void makeSound() {
+    print('Meow!');
+  }
+}
+
+void main() {
+  var dog = Dog();
+  var cat = Cat();
+
+  dog.makeSound(); 
+  cat.makeSound(); 
+}
+--------------------------------------------------------------------
+//Task 3
+class Shape {
+  String color;
+
+  Shape(this.color);
+}
+
+
+class Circle extends Shape {
+  double radius;
+
+  Circle(String color, this.radius) : super(color);
+}
+
+
+class Square extends Shape {
+  double sideLength;
+
+  Square(String color, this.sideLength) : super(color);
+}
+
+void main() {
+  var circle = Circle('Red', 5.0);
+  var square = Square('Blue', 4.0);
+
+  print('Circle > Color: ${circle.color}, Radius: ${circle.radius}');
+  print('Square > Color: ${square.color}, Side length: ${square.sideLength}');
+}
+--------------------------------------------------------------------
+//Task 4
+class Employee {
+  String name;
+  double baseSalary;
+
+  Employee(this.name, this.baseSalary);
+
+  double calculateSalary() {
+    return baseSalary;
+  }
+}
+
+
+class Manager extends Employee {
+  double bonus;
+
+  Manager(String name, double baseSalary, this.bonus) : super(name, baseSalary);
+
+  @override
+  double calculateSalary() {
+    return baseSalary + bonus;
+  }
+}
+
+void main() {
+  var emp = Employee('Alice', 3000);
+  var mgr = Manager('Bob', 4000, 1500);
+
+  print('${emp.name} salary: \$${emp.calculateSalary()}');
+  print('${mgr.name} salary: \$${mgr.calculateSalary()}');
+}
+--------------------------------------------------------------------
+//Task 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
